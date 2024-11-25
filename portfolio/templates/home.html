@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!-- Hero Section -->
+<header class="row min-vh-100 d-flex align-items-center position-relative" style="background: url('{% static 'portfolio/bg.jpg' %}'); background-size: cover; background-position: center;">
+  <!-- Capa de oscurecimiento -->
+  <div class="position-absolute w-100 h-100" style="background: rgba(0,0,0,0.5); top: 0; left: 0;"></div>
+  
+  <!-- Contenido con z-index mayor para que aparezca sobre el overlay -->
+  <div class="col-md-4 text-center position-relative" style="z-index: 2;">
+    <img src="{% static 'portfolio/yo.jpg' %}" class="rounded-circle img-fluid shadow-lg" style="max-width: 300px" alt="David Jaramillo"/>
+    <div class="mt-4 d-flex justify-content-center gap-3">
+      <a href="https://github.com/xXJuanDavidXx" class="text-white"><i class="fab fa-github fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/juan-david-jaramillo-duque-4b226b33a/" class="text-white"><i class="fab fa-linkedin fa-2x"></i></a> 
+    </div>
+  </div>
+
+  <div class="col-md-8 my-auto p-5 position-relative" style="z-index: 2;">
+    <h1 class="display-3 fw-bold mb-4">David Jaramillo</h1>
+    <h3 class="text-primary-emphasis mb-4">Backend Developer | Analista de Seguridad | Administrador de sistemas linux.</h3>
+    <p class="lead">Soy un desarrollador backend apasionado por la tecnología y la seguridad informática. Con experiencia en Django,
+      Python, Linux y Docker, siempre estoy buscando oportunidades para aprender y mejorar.</p>
+    
+    <div class="mt-5">
+      <a class="btn btn-primary btn-lg rounded-pill me-3" href="{% static 'portfolio/cv.pdf' %}">
+        <i class="fas fa-download me-2"></i>Descargar CV
+      </a>
+      <a class="btn btn-outline-light btn-lg rounded-pill" href="#contacto">
+        <i class="fas fa-envelope me-2"></i>Contáctame
+      </a>
+    </div>
+  </div>
+</header>
+
+<hr>
+<!-- Skills Section -->
+<section class="py-5 bg-black" id="skills">
+  <div class="container">
+    <h2 class="text-center display-3 fw-bold mb-5">Habilidades Técnicas</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm bg-transparent">
+          <div class="card-body text-center">
+            <i class="fas fa-code fa-3x mb-3" aria-hidden="true"></i>
+            <h4><strong>Desarrollo Backend</strong></h4>
+            <p>Python, Django, SQL</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm bg-transparent">
+          <div class="card-body text-center">
+            <i class="fas fa-shield-alt fa-3x mb-3"></i>
+            <h4><strong>Ciberseguridad</strong></h4>
+            <p>NIST Cybersecurity Framework, Pentesting.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm bg-transparent">
+          <div class="card-body text-center">
+            <i class="fas fa-server fa-3x mb-3"></i>
+            <h4><strong>Administración de Sistemas</strong></h4>
+            <p>Docker, Linux, Windows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-5" id="proyectos">
+  <div class="container">
+    <h2 class="text-center display-3 fw-bold mb-5">Proyectos Destacados</h2>
+    <div class="text-center row g-4">
+      {% for project in projects %}
+      <div class="col-md-4">
+        <div class="card bg-black card-project border-0 shadow">
+          <img src="{{project.image.url}}" class="card-img-top" alt="{{ project.title }}"/>
+          <div class="card-body">
+            <h2 class="h4 mb-3"><strong>{{ project.title }}</strong></h2>
+            <p class="text-white">{{ project.description }}</p>
+            {% if project.url %}
+            <a href="{{project.url}}" class="btn btn-primary rounded-pill" target="_blank" rel="noreferrer" aria-label="Ver proyecto {{ project.title }}">
+              <i class="fas fa-external-link-alt me-2" aria-hidden="true"></i>Ver Proyecto
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5 bg-black" id="contacto">
+  <div class="container">
+    <h2 class="text-center display-3 fw-bold mb-5">Contacto</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form method="POST" class="text-white" action="{% url 'contacto' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary rounded-pill w-100">Enviar Mensaje</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

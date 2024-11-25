@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load markdown_extras %}
+
+{% load static %}
+
+<div class="container blog-post">
+  <!-- Encabezado del post -->
+  <div class="post-header text-center mb-5">
+    <h1 class="display-4">{{post.title}}</h1>
+    <h2 class="text-muted h5">{{post.date|date:'F jS Y'}}</h2>
+  </div>
+
+  <!-- Imagen destacada -->
+  <div class="post-image mb-5">
+    <img src="{{post.image.url}}" alt="{{post.title}}" class="img-fluid rounded shadow">
+  </div>
+
+  <!-- Contenido del post -->
+  <div class="post-content">
+    {{ post.description | markdown | safe }}
+  </div>
+</div>
+
+{% endblock %}
