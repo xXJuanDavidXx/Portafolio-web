@@ -1,0 +1,22 @@
+<!-- templates/books/book_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Libros</title>
+</head>
+<body>
+    <h1>Filtrar Libros por Autor</h1>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Resultados</h2>
+    <ul>
+        {% for post in filter.qs %}
+            <li>{{ post.title }} by {{ post.category.name }} ({{ post.image }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

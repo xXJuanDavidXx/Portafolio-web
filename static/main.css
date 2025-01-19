@@ -1,0 +1,370 @@
+/* Variables globales */
+:root {
+  --color-1: #FF6B6B;  /* Rojo coral */
+  --color-2: #4ECDC4;  /* Turquesa */
+  --color-3: #FFE66D;  /* Amarillo */
+  --color-4: #7F00FF;  /* Violeta */
+  --color-5: #00FF9F;  /* Verde neón */
+  --dark-bg: #0F0F1A;  /* Fondo más oscuro */
+  --card-bg: #1A1A2E;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+}
+
+/* Estilos base */
+body {
+  background-color: var(--dark-bg);
+  background: linear-gradient(
+    45deg, 
+    rgba(15,15,26,0.97), 
+    rgba(26,26,46,0.97)
+  );
+  font-family: 'Inter', 'Arial', sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Hero Section - Gradiente psicodélico */
+header {
+  min-height: 100vh;
+  background: linear-gradient(
+    45deg,
+    var(--color-1) 0%,
+    var(--color-2) 25%,
+    var(--color-3) 50%,
+    var(--color-4) 75%,
+    var(--color-5) 100%
+  );
+
+  url('{% static "portfolio/bg.jpg" %}');
+  background-size: 400% 400%, cover;
+  background-blend-mode: overlay; /* Mezcla la imagen con el gradiente */
+  background-position: center;
+  animation: gradient 15s ease infinite;
+  
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+header img {
+  transition: transform 0.3s ease;
+  border: 4px solid var(--primary-color);
+}
+
+header img:hover {
+  transform: scale(1.05);
+}
+
+/* Tipografía */
+h1, h2, h3 {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Título con efecto arcoíris */
+.display-3 {
+  background: linear-gradient(
+    to right,
+    var(--color-1),
+    var(--color-2),
+    var(--color-3),
+    var(--color-4),
+    var(--color-5)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Botones con gradientes */
+.btn {
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(
+    45deg,
+    var(--color-1),
+    var(--color-4)
+  );
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(
+    45deg,
+    var(--color-4),
+    var(--color-5)
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(127, 0, 255, 0.4);
+}
+
+.btn-outline-light:hover {
+  transform: translateY(-2px);
+}
+
+/* Sección de habilidades */
+.card:not(.blog-card) {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(15, 15, 26, 0.95);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.card:not(.blog-card)::before {
+  content: '';
+  position: absolute;
+  top: -2px; right: -2px; bottom: -2px; left: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--color-1),
+    var(--color-2),
+    var(--color-3),
+    var(--color-4),
+    var(--color-5)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+  opacity: 0.8;
+}
+
+.card:not(.blog-card):hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card:not(.blog-card) i {
+  color: var(--text-primary);
+  -webkit-text-fill-color: initial;
+  background: none;
+}
+
+/* Añadir sombra al texto para mejor legibilidad */
+.card:not(.blog-card) h4, 
+.card:not(.blog-card) p {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* Proyectos */
+.card-project {
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card-project img {
+  filter: hue-rotate(0deg);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.card-project:hover img {
+  filter: hue-rotate(90deg);
+  transform: scale(1.05);
+}
+
+.card-project:hover {
+  transform: translateY(-5px);
+}
+
+/* Formulario de contacto */
+.form-control {
+  background-color: var(--card-bg);
+  border: 1px solid #444;
+  color: var(--text-primary);
+  padding: 12px 20px;
+}
+
+.form-control:focus {
+  background-color: rgba(26, 26, 46, 0.9);
+  border-color: var(--color-4);
+  box-shadow: 0 0 15px rgba(127, 0, 255, 0.3);
+}
+
+/* Efectos hover para enlaces sociales */
+.social-links a {
+  position: relative;
+  color: var(--text-primary);
+}
+
+.social-links a:hover {
+  text-shadow: 
+    0 0 10px var(--color-3),
+    0 0 20px var(--color-3),
+    0 0 30px var(--color-3);
+  color: var(--color-3) !important;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    filter: hue-rotate(-30deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+}
+
+.card, .btn, header img {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  header {
+    text-align: center;
+  }
+  
+  .btn {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+/* Estilos del Blog */
+.blog-post {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.blog-post .post-header {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.blog-post h1 {
+  background: linear-gradient(
+    to right,
+    var(--color-1),
+    var(--color-2)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.blog-post .post-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.blog-post .post-image img {
+  transition: transform 0.5s ease;
+}
+
+.blog-post .post-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* Ajustes para Prism.js */
+pre[class*="language-"] {
+  background: #1e1e3f !important;
+  border-radius: 10px !important;
+  margin: 1.5rem 0 !important;
+  padding: 1.5rem !important;
+  border: 1px solid var(--color-4) !important;
+}
+
+code[class*="language-"] {
+  color: #fff !important;
+  text-shadow: none !important;
+  background: none !important;
+  font-family: 'Fira Code', monospace !important;
+  font-size: 0.9em !important;
+}
+
+:not(pre) > code[class*="language-"] {
+  background: #1e1e3f !important;
+  color: #fff !important;
+  padding: 0.2em 0.4em !important;
+  border-radius: 3px !important;
+  white-space: normal !important;
+  border: 1px solid var(--color-4) !important;
+}
+
+/* Colores de sintaxis personalizados */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6c7393 !important;
+}
+
+.token.punctuation {
+  color: #7fdaff !important;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ff80bf !important;
+}
+
+.token.boolean,
+.token.number {
+  color: #ff9d00 !important;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #a5ff90 !important;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #ff9d00 !important;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #ff80bf !important;
+}
+
+.token.function,
+.token.class-name {
+  color: #7fdaff !important;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #ff9d00 !important;
+}
