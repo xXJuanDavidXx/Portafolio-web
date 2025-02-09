@@ -1,15 +1,14 @@
-## Django Portofolio Example
+## Protafolio psicodelico en Django
 
-this is a basic portfolio in dark mode
-![](./screenshot.png)
+el codigo que uso para el portafolio de proyectos
 
 ### Installation
 
 ```
-git clone https://github.com/FaztWeb/django-portfolio-simple.git
-cd django-portfolio-simple
+git clone https://github.com/xXJuanDavidXx/Portafolio-web.git
+cd Portafolio-web
 pip install -r requirements.txt
 python manage.py runserver
 ```
 
-now you can visit <a href="http://localhost:8000" target="_blank">http://localhost:8000</a>
+puedes verlo en <a href="http://localhost:8000" target="_blank">http://localhost:8000</a>
