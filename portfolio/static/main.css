@@ -166,22 +166,22 @@ h1, h2, h3 {
 }
 
 /* Proyectos */
-.card-project, .blog-card {
+.card-project {
   overflow: hidden;
   transition: transform 0.3s ease;
 }
 
-.card-project, .blog-card img {
+.card-project img {
   filter: hue-rotate(0deg);
   transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-.card-project, .blog-card:hover img {
+.card-project:hover img {
   filter: hue-rotate(90deg);
   transform: scale(1.05);
 }
 
-.card-project, .blog-card:hover {
+.card-project:hover {
   transform: translateY(-5px);
 }
 

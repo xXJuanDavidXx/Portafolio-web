@@ -3,6 +3,7 @@ from .models import Post
 import markdown
 #from .filters import Filtro
 from .forms import Buscar
+from django.core.paginator import Paginator
 
 
 def renderPosts(request):
@@ -24,8 +25,11 @@ def renderPosts(request):
         form = Buscar()
         resultados = Post.objects.all()
 
+    paginator = Paginator(resultados, 6)  # 6 posts por página
+    page_number = request.GET.get('page')  # Obtener el número de página de la URL
+    page_obj = paginator.get_page(page_number)  # Obtener la página correspondiente
 
-    return render(request, "blog.html", { "total_posts": total_posts, 'pagina_actual': 'blogs', 'form': form, 'post': resultados})
+    return render(request, "blog.html", { "total_posts": total_posts, 'pagina_actual': 'blogs', 'form': form, 'post': page_obj})
 
 
 def post_detail(request, post_id):

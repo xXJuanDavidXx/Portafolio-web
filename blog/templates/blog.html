@@ -3,10 +3,6 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% load markdown_extras %}
-
-<!--REVISAR https://getbootstrap.com/docs/5.3/components/navbar/-->
-
 
 <div class="container py-4">
   <figure class="text-center">
@@ -16,22 +12,22 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-black rounded pt-3 pb-1">
     <div class="container-fluid">
         <!-- Botón de menú para móviles -->
-         <div class="align-items-center pb-2">
-        <button class="navbar-toggler p-2 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-         </div>
+        <div class="align-items-center pb-2">
+          <button class="navbar-toggler p-2 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
         <!-- Contenido del Navbar -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <form method="get" class="w-100 d-flex flex-column flex-md-row align-items-center">
                 <div class="row w-100 g-2 g-md-3 align-items-center">
-                    <!-- Barra de Búsqueda (más grande) -->
+                    <!-- Barra de Búsqueda -->
                     <div class="col-12 col-md-7">
                         {{ form.query|as_crispy_field }}
                     </div>
 
-                    <!-- Dropdown de Categorías (más pequeño) -->
+                    <!-- Dropdown de Categorías -->
                     <div class="col-12 col-md-3">
                         {{ form.category|as_crispy_field }}
                     </div>
@@ -44,59 +40,84 @@
             </form>
         </div>
     </div>
-</nav>
+  </nav>
 
-  
   <hr>
   
   <div class="row row-cols-1 g-4">
     <style>
-
-.custom-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-/* Para Firefox */
-.custom-scroll {
-  scrollbar-width: none;
-}
-
+      .custom-scroll::-webkit-scrollbar { display: none; }
+      .custom-scroll { scrollbar-width: none; }
     </style>
     
     {% if post %}
-    {% for p in post %}
-    <div class="col-md-4">
-      <div class="card blog-card bg-black h-100 d-flex flex-column">
-        <!-- Imagen con tamaño uniforme -->
-        <div class="ratio ratio-16x9">
-          <img src="{{ p.image.url }}" class="card-img-top object-fit-cover" alt="{{ p.title }}">
-        </div>
+      {% for p in post %}
+      <div class="col-md-4">
+        <div class="card card-project blog-card bg-black h-100 d-flex flex-column">
+          <!-- Imagen con tamaño uniforme -->
+          <div class="ratio ratio-16x9">
+            <img src="{{ p.image.url }}" class="card-img-top object-fit-cover" alt="{{ p.title }}">
+          </div>
     
-        <div class="card-body d-flex flex-column text-center">
-          <!-- Título más pequeño y con estilos uniformes -->
-          <h2 class="h4 fw-bold fst-italic">{{ p.title }}</h2>
+          <div class="card-body d-flex flex-column text-center">
+            <!-- Título -->
+            <h2 class="h4 fw-bold fst-italic">{{ p.title }}</h2>
     
-          <!-- Fecha con formato reducido -->
-          <p class="text-muted small">{{ p.date|date:'M d Y' }}</p>
+            <!-- Fecha -->
+            <p class="text-muted small">{{ p.date|date:'M d Y' }}</p>
     
-          <!-- Descripción con scroll discreto -->
-          <p class="flex-grow-1 overflow-auto text-white custom-scroll" style="max-height: 80px;">
-            {{ p.description|striptags|truncatechars:200 }}
-          </p>
+            <!-- Descripción -->
+            <p class="flex-grow-1 overflow-auto text-white custom-scroll" style="max-height: 80px;">
+              {{ p.description|striptags|truncatechars:200 }}
+            </p>
     
-          <!-- Botón alineado abajo siempre -->
-          <a href="{% url 'blog:post_detail' p.id %}" class="btn btn-primary btn-sm mt-auto">Leer más</a>
+            <!-- Botón Leer más -->
+            <a href="{% url 'blog:post_detail' p.id %}" class="btn btn-primary btn-sm mt-auto">Leer más</a>
+          </div>
         </div>
       </div>
-    </div>
-    
-    
-    {% endfor %}
-{% else %}
-    <p class="text-center">No hay resultados</p>
-{% endif %}
+      {% endfor %}
+    {% else %}
+      <p class="text-center">No hay resultados</p>
+    {% endif %}
 
   </div>
+
+  <!-- Controles de Paginación con Números -->
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center p-2 rounded">
+        {% if post.has_previous %}
+            <li class="page-item">
+                <a class="page-link bg-dark text-white border-secondary" href="?page=1">&laquo; Primera</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link bg-dark text-white border-secondary" href="?page={{ post.previous_page_number }}">Anterior</a>
+            </li>
+        {% endif %}
+
+        {% for num in post.paginator.page_range %}
+            {% if post.number == num %}
+                <li class="page-item active">
+                    <span class="page-link bg-primary text-white border-primary">{{ num }}</span>
+                </li>
+            {% elif num > post.number|add:'-3' and num < post.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link bg-dark text-white border-secondary" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if post.has_next %}
+            <li class="page-item">
+                <a class="page-link bg-dark text-white border-secondary" href="?page={{ post.next_page_number }}">Siguiente</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link bg-dark text-white border-secondary" href="?page={{ post.paginator.num_pages }}">Última &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
 </div>
 
 {% endblock %}
