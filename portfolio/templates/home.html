@@ -43,7 +43,7 @@
     <h2 class="text-center display-3 fw-bold mb-5">Habilidades Técnicas</h2>
     <div class="row g-4">
       <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm bg-transparent">
+        <div class="card card-b h-100 border-0 shadow-sm bg-transparent">
           <div class="card-body text-center">
             <i class="fas fa-code fa-3x mb-3" aria-hidden="true"></i>
             <h4><strong>Desarrollo Backend</strong></h4>
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm bg-transparent">
+        <div class="card card-b h-100 border-0 shadow-sm bg-transparent">
           <div class="card-body text-center">
             <i class="fas fa-shield-alt fa-3x mb-3"></i>
             <h4><strong>Ciberseguridad</strong></h4>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm bg-transparent">
+        <div class="card card-b h-100 border-0 shadow-sm bg-transparent">
           <div class="card-body text-center">
             <i class="fas fa-server fa-3x mb-3"></i>
             <h4><strong>Administración de Sistemas</strong></h4>
@@ -75,19 +75,56 @@
 
 <!-- Portfolio Section -->
 <section class="py-5" id="proyectos">
+  <style>
+    .card-project {
+      height: 100%; /* Todas las tarjetas tendrán la misma altura */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-project img {
+      height: 200px; /* Tamaño uniforme para las imágenes */
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .card-project .card-body {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      min-height: 250px; /* Ajusta según sea necesario */
+    }
+
+    .card-project .card-body p {
+      flex-grow: 1;
+      overflow: auto; /* Permite hacer scroll si hay mucho texto */
+      max-height: 100px; /* Evita que el texto haga crecer la tarjeta */
+    }
+
+    /* Opcional: personalizar el scrollbar (solo para navegadores modernos) */
+    .card-project .card-body p::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .card-project .card-body p::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 5px;
+    }
+  </style>
+
   <div class="container">
     <h2 class="text-center display-3 fw-bold mb-5">Proyectos Destacados</h2>
     <div class="text-center row g-4">
       {% for project in projects %}
       <div class="col-md-4">
-        <div class="card bg-black card-project border-0 shadow">
-          <img src="{{project.image.url}}" class="card-img-top" alt="{{ project.title }}"/>
-          <div class="card-body">
+        <div class="card card-project bg-black border-0 shadow h-100">
+          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" />
+          <div class="card-body d-flex flex-column">
             <h2 class="h4 mb-3"><strong>{{ project.title }}</strong></h2>
-            <p class="text-white">{{ project.description }}</p>
+            <p class="text-white flex-grow-1">{{ project.description }}</p>
             {% if project.url %}
-            <a href="{{project.url}}" class="btn btn-primary rounded-pill" target="_blank" rel="noreferrer" aria-label="Ver proyecto {{ project.title }}">
-              <i class="fas fa-external-link-alt me-2" aria-hidden="true"></i>Ver Proyecto
+            <a href="{{ project.url }}" class="btn btn-primary rounded-pill mt-auto" target="_blank" rel="noreferrer" aria-label="Ver proyecto {{ project.title }}">
+              <i class="fas fa-external-link-alt me-2" aria-hidden="true"></i> Ver Proyecto
             </a>
             {% endif %}
           </div>
@@ -97,6 +134,8 @@
     </div>
   </div>
 </section>
+
+
 
 <!-- Contact Section -->
 <section class="py-5 bg-black" id="contacto">

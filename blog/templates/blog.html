@@ -2,37 +2,43 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
+{% load static %}
+{% load markdown_extras %}
 
 <!--REVISAR https://getbootstrap.com/docs/5.3/components/navbar/-->
 
 
 <div class="container py-4">
-  <h1 class="text-center display-3 fw-bold mb-5"><strong>Posts</strong></h1>
+  <figure class="text-center">
+    <img src="{% static 'blog/imagen.jpg' %}" alt="Pentest Hub" class="img-fluid">
+  </figure>
   
   <nav class="navbar navbar-expand-lg navbar-dark bg-black rounded pt-3 pb-1">
     <div class="container-fluid">
-        <!-- Botón para menú en dispositivos pequeños -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Botón de menú para móviles -->
+         <div class="align-items-center pb-2">
+        <button class="navbar-toggler p-2 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+         </div>
         <!-- Contenido del Navbar -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <form method="get" class="w-100 d-flex align-items-center">
-                <div class="row w-100 g-3 align-items-center">
+            <form method="get" class="w-100 d-flex flex-column flex-md-row align-items-center">
+                <div class="row w-100 g-2 g-md-3 align-items-center">
                     <!-- Barra de Búsqueda (más grande) -->
-                    <div class="col-md-7">
+                    <div class="col-12 col-md-7">
                         {{ form.query|as_crispy_field }}
                     </div>
-                    
+
                     <!-- Dropdown de Categorías (más pequeño) -->
-                    <div class="col-md-3">
+                    <div class="col-12 col-md-3">
                         {{ form.category|as_crispy_field }}
                     </div>
 
                     <!-- Botón de Búsqueda -->
-                    <div class="col-md-2 align-self-start">
-                        <button class="btn btn-primary btn-sm" style="height: 50px;" type="submit">Buscar</button>
+                    <div class="col-12 col-md-2 text-md-start text-center align-self-center mt-2 mt-md-0">
+                        <button class="btn btn-primary btn-sm w-100" style="height: 50px;" type="submit">Buscar</button>
                     </div>
                 </div>
             </form>
@@ -44,43 +50,52 @@
   <hr>
   
   <div class="row row-cols-1 g-4">
-    {% for post in post %}
-    <div class="col">
-      <div class="card blog-card bg-black border-secondary h-100">
-        <div class="row g-0">
-          <div class="col-md-3">
-            <!-- Contenedor con ratio fijo para las imágenes -->
-            <div class="ratio ratio-4x3">
-              <img src="{{post.image.url}}" 
-                   alt="{{post.title}}"
-                   class="object-fit-cover w-100 h-100">
-            </div>
-          </div>
-          
-          <div class="col-md-9">
-            <div class="card-body d-flex flex-column h-100">
-              <h2 class="card-title display-3 h4">{{ post.title }}</h2>
-              <div class="text-xs">
-                <p class="card-text flex-grow-1">{{ post.description|striptags|truncatechars:70 }}</p>
-              </div>
-              <div class="mt-auto d-flex justify-content-between">
-                <p class="text-muted small mb-|striptags|truncatechars:100">{{ post.date|date:'M d Y'|upper }}</p>
-                <a href="{% url 'blog:post_detail' post.id %}" 
-                   class="btn btn-primary btn-sm">Leer más</a>
-              </div>
-              <div>
-                <p><strong>Categories:</strong> 
-                    {% for category in post.category.all %}
-                        {{ category.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </p>
-              </div>
-            </div>
-          </div>
+    <style>
+
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Para Firefox */
+.custom-scroll {
+  scrollbar-width: none;
+}
+
+    </style>
+    
+    {% if post %}
+    {% for p in post %}
+    <div class="col-md-4">
+      <div class="card blog-card bg-black h-100 d-flex flex-column">
+        <!-- Imagen con tamaño uniforme -->
+        <div class="ratio ratio-16x9">
+          <img src="{{ p.image.url }}" class="card-img-top object-fit-cover" alt="{{ p.title }}">
+        </div>
+    
+        <div class="card-body d-flex flex-column text-center">
+          <!-- Título más pequeño y con estilos uniformes -->
+          <h2 class="h4 fw-bold fst-italic">{{ p.title }}</h2>
+    
+          <!-- Fecha con formato reducido -->
+          <p class="text-muted small">{{ p.date|date:'M d Y' }}</p>
+    
+          <!-- Descripción con scroll discreto -->
+          <p class="flex-grow-1 overflow-auto text-white custom-scroll" style="max-height: 80px;">
+            {{ p.description|striptags|truncatechars:200 }}
+          </p>
+    
+          <!-- Botón alineado abajo siempre -->
+          <a href="{% url 'blog:post_detail' p.id %}" class="btn btn-primary btn-sm mt-auto">Leer más</a>
         </div>
       </div>
     </div>
+    
+    
     {% endfor %}
+{% else %}
+    <p class="text-center">No hay resultados</p>
+{% endif %}
+
   </div>
 </div>
 

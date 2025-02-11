@@ -79,6 +79,7 @@ h1, h2, h3 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 3s linear infinite;
+  transform: none;
 }
 
 @keyframes shine {
@@ -118,7 +119,7 @@ h1, h2, h3 {
 }
 
 /* Sección de habilidades */
-.card:not(.blog-card) {
+.card-b:not(.blog-card) {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: rgba(15, 15, 26, 0.95);
   border: 2px solid transparent;
@@ -126,7 +127,7 @@ h1, h2, h3 {
   position: relative;
 }
 
-.card:not(.blog-card)::before {
+.card-b:not(.blog-card)::before {
   content: '';
   position: absolute;
   top: -2px; right: -2px; bottom: -2px; left: -2px;
@@ -145,42 +146,42 @@ h1, h2, h3 {
   opacity: 0.8;
 }
 
-.card:not(.blog-card):hover {
+.card-b:not(.blog-card):hover {
   transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.card:not(.blog-card) i {
+.card-b:not(.blog-card) i {
   color: var(--text-primary);
   -webkit-text-fill-color: initial;
   background: none;
 }
 
 /* Añadir sombra al texto para mejor legibilidad */
-.card:not(.blog-card) h4, 
-.card:not(.blog-card) p {
+.card-b:not(.blog-card) h4, 
+.card-b:not(.blog-card) p {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 2;
 }
 
 /* Proyectos */
-.card-project {
+.card-project, .blog-card {
   overflow: hidden;
   transition: transform 0.3s ease;
 }
 
-.card-project img {
+.card-project, .blog-card img {
   filter: hue-rotate(0deg);
   transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-.card-project:hover img {
+.card-project, .blog-card:hover img {
   filter: hue-rotate(90deg);
   transform: scale(1.05);
 }
 
-.card-project:hover {
+.card-project, .blog-card:hover {
   transform: translateY(-5px);
 }
 
